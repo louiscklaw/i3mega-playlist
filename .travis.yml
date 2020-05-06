@@ -1,32 +1,22 @@
-dist: bionic
+# https://docs.travis-ci.com/user/docker/
+# https://docs.travis-ci.com/user/environment-variables/
+# https://docs.travis-ci.com/user/job-lifecycle/
+
+# You can import up to 25 other configs in total.
+os: linux
+
+language: node_js
+
+node_js:
+  - 12
+
+cache:
+  - npm
+  - pip
+
+import:
+  - credentials.yml
 
 script:
-  - hostname
-
-after_script:
-  - cd .travis
-  - id
-  - sudo apt update
-  - sudo apt install -y python3 python3-pip python3-dev python3-wheel python3-setuptools
-  - pip3 install --user pipenv
-  - pipenv sync
-  - pipenv run python3 ./merge.py
-
-
-notifications:
-  slack:
-    secure: "ip5TsnefOXRlmAeUqfRtWFy6ZS59UC6IQdg87bkJpQNNcE36JWDx44Gxh62RS7eOtZbfd1KMHlzAQW5Qh5XR4HFkbEi0Fg8dtC00jRZ2nTq435aoNf1g5DFy1kQDwZhUUaRYRcdJYCAIhRnFJhgHvNsMuBZe9fTr96X4rgwm4VWIMINLwFB9qGv2c+/qveqeTEF/1wxf+i6AZ8NTev2FbcvQMK8Gx98z5Oj6u6dh3b4ewauQ90754A8/yA6Z41klh+8JfyH1qtZ7CX6foI5xZm4rKt0cD/fLaz7uhfrMpOptODU3n+mCH9R06kTGU207LfOMM0vta97owUFtEHNm8MP5XIHFWjGG3rSPT0jvqn1L7vhdNWaGfTj+rhMWzCgUnZQ249hR5S89yxeKWlBbDu+FHy8AVzyYDMh73t/aUv+eW9U+1SU5vWxwX2EH0z8EYKcai94oQgqiP3JVK1/bGWwLURGwuE+JlhbbHk/6q39h89uHNLDeKR+EgJgnSwVpkb6sRuNXglNWzfnTOHbe4UG6rDrY7ZqV+IbOe1vtgp8kq9dnEY1CFDcPg96ql8y1Cu7qr8XXZC2V7CnBazyn/Fja+7BJkxclMBirx0p6Dij6M+Rk9U5XsbPDV+0Uj1q/DCndk6C51HN/SNa0e9ze5na4nTxviy47R+04UtCl2QQ="
-
-
-env:
-  global:
-  # SLACK_TOKEN
-  - secure: "gw+OXJWI3wto1zOWCcZdYql4UtZA1rbuBTdVACDlPowluYROQuS71HYo9QEn81wEAD++2MAVJoM0T2askguBsQezbAMQtDss543CZbbuclJwTfls2d58x4urC7+ybM65gBFfmOXCl3HVFTN/do4JQCiNXFX09NmGrXWZbuRRh54c0hMKVEp5v6gQJU8fAtVNYjyUoYRvSzw+V5BQ9m4+JGgTq5NJFB6Mf9SUwjPM0xwhc3j7RgWxRJcgMPDBp5nSP13bqxfVGBQTZdNZo6V57wBdQ//fP/LSir9IAq07LWOy3Gg1/6BdJ2Bs4cNWDmHJmY4k+Yv9X8LBfmE4nXtB8KKYM61xPGWyTTGEBGiCHc30SXQgzPjSUzTDo/Hchaf2mUfilMSBAZJCMk6VlqcwWMI3Zud7JD1bHKc/m08WxkABPtckWYhIzTiauGcbqq9h1idlrXGPq4K45ZRALCUlwN3tzqWA+UH0pkvbMNAsRjsoSfA8Bu2mrxc2bJN5+YN+RPEhc8S7qT8BGgS3PsjwqqNDl0VtsQtX7HbmD1epSQikFTbM6zOhIr5vYVqCu3RuF5ot8oD6GbiW9/4dFxdYSD68kH8SPsZIz0nFTv/FPJdXZNNt958sSWwkes1bpXQa5sTIof+N3ZdasCLBV3hACXZ759CQEA8KqERBNwKum74="
-
-
-  # GITHUB_TOKEN
-  - secure: "niT69SNclkP+EMt6OycRnHCkMbrqt6fv7wCaa5pizIQ0BnFffKm6su6PtMLBgugkvmBYc97visDK+9S6oZuxGehHLZxQpONaQXpKw978O3x/atKxsbuW646fCqI3902PIPWpSc8fuOpFvMgM5BiLbuYeerF2mN3lm/rHIB1xcliVQr9vYp7PHFhGRnL5/dU8o40zm9+bbdJW2sDZ4dkRpwdgE5qypeShLa21U2RyvGersn+4bkswHt1IsXyLt6xF8Au6Bi/6N/EPjsggWWRCcppOykAafcjVOPFqGUgAiohlFEgim2SRikjdS0emR2bQAp/OtwAxKUFGCQUuWcFJjUCKoKRmzYYmRv7ilrLm8ivFTZgK35whuF/KyTem70xsJ+oPUzNtnDsvUqMMOokQgWRj/0NiSlFOT9zIi3gaM3sJMQLHOWY97HPO0ianMFkqbFf8NQEV9hEjUn1itD8Kushtkpr5nBVjDuOT4N/XAunYb96tfwO3oK8YR8cXzyzvB+jI8j2ltsaVdXUanqYl6ME1XWMvwkE1Zq33BqTlz0y8HFwaKCr8xzmw/dnDbaayo65mZc7FVo1h3wmqVo7sjQsV/FB35AOtWO4ICRbmBYuKDdQmorCEVUtBf3scknUVfoGLvpSVWptM0ZpgMBydJu03m7CTG2HaEf05s1F8bIE="
-
-
-  # TRAVIS_COMMIT_TOKEN
-  - secure: "WNbe5Nm5FqVYW3RQd47G2bGHZUAuTVPmGF2CoG1ZxNb/fCFc7l4LT54aB3uBmLKjnko84Sr/eyXAr6mdAZ4JtESZ9oTNE3pk8ddVg1ASe0NmQt+6C/5j9GSArMrFOf/Q7VTwgs/6xYCB8ZiQFuSGP4Zq/6GuyT0v4V+cQ9YRRsBHvUO1w8Wen4lxvjv3U4uzrFxsHpMASAbnOQc9yJumuVjDXTvEA00fJ6d6ZoT/7h+aixSo14ungh0y0dUHSY6if7bjDUAuUyokNlOw4bPMtcL7aOIXpMBNnsu3UCjQ3yw8JqfQbOjWuj2NdCvtON6/wthWNjw4B0Yci57e1x17Me68xcVlDmTHialPgXhuDaQSt7eYRiba3Q2XHx6Ju98gY/Hu1DrF4Mvd0JRnllTg8rKtbo/7EIQDzMrZRK9Gz/g+phNeL2uhYlqQ/ayPfPhW2H+B6wo+F/bAH0LrDJ8tRWxDWiNrBGJ89/d7hYuQs3EgJJ9RycvrsYoWtYi8qeoZ5Ws7jrgYgWQXo7ipdRxUUyEWwNJL1Hyd1plf9eyYGcwC/8ijbqkrLaEs5Iv3jMsAhBTRnjaNSiKRF1LIQHJkpW1qweXVhgPjGReSGROnLZCbkTIGYjzfQ3Xy936QYdODXf6uzVwkweTGThGtIULp3E/ywwaLTsnx/RPeuOJyhdI="
+  - wget https://raw.githubusercontent.com/louiscklaw/travis-playlist/master/travis-build-merger/merge_if_success.sh
+  - bash merge_if_success.sh | tee merge.log
